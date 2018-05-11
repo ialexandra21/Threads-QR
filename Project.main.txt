@@ -1,0 +1,21 @@
+package com.company;
+public class Main {
+
+    public static void main(String[] args)
+    {  Thno1 thread1 = new Thno1();
+       Thno2 thread2 = new Thno2();
+       Thno3 thread3 = new Thno3();
+
+        try {
+            thread1.start();
+            thread1.join();
+            thread2.start();
+            thread2.join();
+            thread3.start();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+     }
+

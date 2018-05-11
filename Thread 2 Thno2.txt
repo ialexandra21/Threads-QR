@@ -1,0 +1,49 @@
+package com.company;
+
+import com.google.zxing.*;
+import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.qrcode.QRCodeReader;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+public class Thno2 extends Thread {
+    public void run(){
+        String result = readQRCode( "C:/Users/Administrator/Desktop/qr2.png");
+        System.out.println(result);}
+
+       private static String readQRCode(String filePath) { 
+
+
+            File file = new File(filePath);
+            BufferedImage image = null; //intermediar;
+            BinaryBitmap bitmap = null; 
+            Result result = null;
+            try{
+                image = ImageIO.read(file);
+                int[] pixels = image.getRGB(0, 0, image.getWidth(),
+                        image.getHeight(), null, 0, image.getWidth());
+                RGBLuminanceSource source = new RGBLuminanceSource(image.getWidth(), image.getHeight(), pixels);
+                // HybridBinarizer hb = new HybridBinariser(source);
+                bitmap = new BinaryBitmap((new HybridBinarizer(source)));
+
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            QRCodeReader reader = new QRCodeReader();
+            try{
+                result = reader.decode(bitmap);
+                return result.getText();
+            } catch(NotFoundException e) {
+                e.printStackTrace();
+            } catch(ChecksumException e1) {
+                e1.printStackTrace();
+            }catch (FormatException e2){
+                e2.printStackTrace();
+            }
+            return null; }
+    }
+
+
+
